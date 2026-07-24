@@ -1,0 +1,24 @@
+diff --git a/src/main/resolve/autoUpdater.ts b/src/main/resolve/autoUpdater.ts
+--- a/src/main/resolve/autoUpdater.ts
++++ b/src/main/resolve/autoUpdater.ts
+@@ -48,4 +48,8 @@
+ export async function checkUpdate(): Promise<IAppVersion | undefined> {
++  if (process.platform === 'linux') {
++    return undefined
++  }
++
+   const [{ 'mixed-port': mixedPort = DEFAULT_MIHOMO_PORTS.mixed }, { githubProxy = '' }] =
+     await Promise.all([getControledMihomoConfig(), getAppConfig()])
+   const githubUrl =
+diff --git a/src/main/core/mihomoApi.ts b/src/main/core/mihomoApi.ts
+--- a/src/main/core/mihomoApi.ts
++++ b/src/main/core/mihomoApi.ts
+@@ -400,4 +400,8 @@
+ export const mihomoUpgrade = async (): Promise<void> => {
++  if (process.platform === 'linux') {
++    throw new Error('Mihomo is managed by Nix on Linux')
++  }
++
+   const instance = await getAxios()
+   return await instance.post('/upgrade', undefined, { timeout: 90000 })
+ }

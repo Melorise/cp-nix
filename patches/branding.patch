@@ -1,0 +1,11 @@
+diff --git a/electron-builder.yml b/electron-builder.yml
+--- a/electron-builder.yml
++++ b/electron-builder.yml
+@@ -59 +59 @@
+-  executableName: mihomo-party
++  executableName: clash-party
+@@ -68,2 +68,2 @@
+-      StartupWMClass: mihomo-party
+-      Icon: mihomo-party
++      StartupWMClass: clash-party
++      Icon: clash-party

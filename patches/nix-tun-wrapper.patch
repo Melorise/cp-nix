@@ -1,0 +1,54 @@
+diff --git a/src/main/core/manager.ts b/src/main/core/manager.ts
+--- a/src/main/core/manager.ts
++++ b/src/main/core/manager.ts
+@@ -79,3 +79,4 @@
+ const execFilePromise = promisify(execFile)
+ const ctlParam = process.platform === 'win32' ? '-ext-ctl-pipe' : '-ext-ctl-unix'
++const nixMihomoWrapper = '/run/wrappers/bin/clash-party-mihomo'
+ const coreHookTimeout = 30000
+@@ -370,5 +371,8 @@
+   return {
+-    corePath: mihomoCorePath(core),
++    corePath:
++      process.platform === 'linux' && tun?.enable && existsSync(nixMihomoWrapper)
++        ? nixMihomoWrapper
++        : mihomoCorePath(core),
+     workDir: diffWorkDir ? mihomoProfileWorkDir(current) : mihomoWorkDir(),
+     safePath: diffWorkDir ? mihomoWorkDir() : undefined,
+     ipcPath,
+diff --git a/src/main/core/permissions.ts b/src/main/core/permissions.ts
+--- a/src/main/core/permissions.ts
++++ b/src/main/core/permissions.ts
+@@ -14,5 +14,6 @@
+ const execPromise = promisify(exec)
+ const execFilePromise = promisify(execFile)
++const nixMihomoWrapper = '/run/wrappers/bin/clash-party-mihomo'
+ 
+ // 内核名称白名单
+ const ALLOWED_CORES = ['mihomo', 'mihomo-alpha', 'mihomo-smart'] as const
+@@ -76,9 +77,13 @@
+   try {
+     if (process.platform === 'win32') {
+       return await checkAdminPrivileges()
+     }
+ 
++    if (process.platform === 'linux' && existsSync(nixMihomoWrapper)) {
++      return true
++    }
++
+     if (process.platform === 'darwin' || process.platform === 'linux') {
+       const stats = await stat(corePath)
+       return (stats.mode & 0o4000) !== 0 && stats.uid === 0
+     }
+@@ -253,4 +258,9 @@
+   if (process.platform === 'linux') {
+-    await execFilePromise('pkexec', ['chown', 'root:root', corePath])
+-    await execFilePromise('pkexec', ['chmod', '+sx', corePath])
++    if (existsSync(nixMihomoWrapper)) {
++      return
++    }
++
++    throw new Error(
++      'TUN support requires enabling programs.clash-party in the NixOS configuration'
++    )
+   }

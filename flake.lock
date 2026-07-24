@@ -1,0 +1,128 @@
+{
+  "nodes": {
+    "asn": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-bYBRUboYCyEixK/jdhPayyKdB0HQegLmiFXvzB7ZFDU=",
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+      }
+    },
+    "clash-party": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783321592,
+        "narHash": "sha256-ituoVv/q/aHt3KOt4fHRDGHGEwnF/nb2E73s/oYw74U=",
+        "owner": "mihomo-party-org",
+        "repo": "clash-party",
+        "rev": "1caff4cabd83d0e2768ecadf52c85c5dcc0ed9de",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mihomo-party-org",
+        "ref": "v2.0.0",
+        "repo": "clash-party",
+        "type": "github"
+      }
+    },
+    "country": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-DpM+/Jsyy7R51/AQKDBVhuT8Fgr1crpz0uaX/0xV6bs=",
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
+      }
+    },
+    "geoip": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ov9zEg2tBCpxru5uNzMs6Npaawz0CXthUaBDQIBcOqs=",
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+      }
+    },
+    "geosite": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-PAA0zUq0to9HpJ7+sXXcCm6GgvuZvci5HVoH/u41m0k=",
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+      }
+    },
+    "metadb": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-UVm3qjQmgmDSzv6zXPgVXfEQsHwDzl3yTWrRXzh9hrs=",
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1784796856,
+        "narHash": "sha256-wWFrV5/Qbm+lyt5x20E/bSbfJiGKMo4RCxZV8cl/WZI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e2587caef70cea85dd97d7daab492899902dbf5d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "asn": "asn",
+        "clash-party": "clash-party",
+        "country": "country",
+        "geoip": "geoip",
+        "geosite": "geosite",
+        "metadb": "metadb",
+        "nixpkgs": "nixpkgs",
+        "sysproxy": "sysproxy"
+      }
+    },
+    "sysproxy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781896006,
+        "narHash": "sha256-z/IlR6kQfzFkg42fmKKTUTFGgcMLobcNZHeHQFDN5kw=",
+        "owner": "mihomo-party-org",
+        "repo": "sysproxy-rs-opti",
+        "rev": "d6fbb3dee696739e7d32ece15479a7770f687c9b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mihomo-party-org",
+        "ref": "main",
+        "repo": "sysproxy-rs-opti",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

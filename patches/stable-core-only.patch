@@ -1,0 +1,12 @@
+diff --git a/src/main/utils/dirs.ts b/src/main/utils/dirs.ts
+--- a/src/main/utils/dirs.ts
++++ b/src/main/utils/dirs.ts
+@@ -79,6 +79,10 @@
+ export function mihomoCorePath(core: string): string {
++  if (process.platform === 'linux') {
++    core = 'mihomo'
++  }
++
+   const isWin = process.platform === 'win32'
+   // 处理 Smart 内核
+   if (core === 'mihomo-smart') {
