@@ -68,7 +68,7 @@ jobs:
           nix build .#default --no-link --print-build-logs --print-out-paths > "$RUNNER_TEMP/out-paths"
           cachix push "$CACHIX_CACHE_NAME" < "$RUNNER_TEMP/out-paths"
           output_path="$(head -n 1 "$RUNNER_TEMP/out-paths")"
-          cachix pin "$CACHIX_CACHE_NAME" build-record "$output_path" --keep-revisions 3
+          cachix pin "$CACHIX_CACHE_NAME" build-record "$output_path" --keep-revisions 1
 
       - name: Create build record release
         env:
