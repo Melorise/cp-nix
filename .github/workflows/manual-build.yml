@@ -67,6 +67,8 @@ jobs:
           set -euo pipefail
           nix build .#default --no-link --print-build-logs --print-out-paths > "$RUNNER_TEMP/out-paths"
           cachix push "$CACHIX_CACHE_NAME" < "$RUNNER_TEMP/out-paths"
+          output_path="$(head -n 1 "$RUNNER_TEMP/out-paths")"
+          cachix pin "$CACHIX_CACHE_NAME" build-record "$output_path" --keep-revisions 3
 
       - name: Create build record release
         env:
@@ -89,6 +91,7 @@ jobs:
             echo "- Locked inputs: https://github.com/$GITHUB_REPOSITORY/blob/$GITHUB_SHA/flake.lock"
             echo "- Workflow run: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
             echo "- Cache: https://$CACHIX_CACHE_NAME.cachix.org"
+            echo "- Cachix pin: \`build-record\` (latest 3 revisions retained)"
             echo "- CACHIX_CACHE_NAME: \`$CACHIX_CACHE_NAME\`"
             echo "- CACHIX_PUBLIC_KEY: \`$CACHIX_PUBLIC_KEY\`"
             echo "- CACHIX_AUTH_TOKEN: repository secret configured; value not disclosed"
