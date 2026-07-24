@@ -38,5 +38,5 @@ Nix 启动器使用共享 Electron，并把 `app.asar` 作为参数传入。此�
 nix build
 ```
 ## Cachix配置
-地址：https://melorise-cp-nix.cachix.org
+地址：https://melorise-cp-nix.cachix.org   
 公钥：melorise-cp-nix.cachix.org-1:GNg96VizkktTdGMrvl6+PLPHY3jPce4a72HqP2cj4S4=
