@@ -1,0 +1,101 @@
+name: Manual build record
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: manual-build-record
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and publish cache
+    runs-on: ubuntu-24.04
+    env:
+      CACHIX_CACHE_NAME: ${{ vars.CACHIX_CACHE_NAME }}
+      CACHIX_PUBLIC_KEY: ${{ vars.CACHIX_PUBLIC_KEY }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Validate repository configuration
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$CACHIX_CACHE_NAME" || { echo "CACHIX_CACHE_NAME is not configured" >&2; exit 1; }
+          test -n "$CACHIX_PUBLIC_KEY" || { echo "CACHIX_PUBLIC_KEY is not configured" >&2; exit 1; }
+          test -n "$CACHIX_AUTH_TOKEN" || { echo "CACHIX_AUTH_TOKEN is not configured" >&2; exit 1; }
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ github.token }}
+          extra_nix_config: |
+            extra-substituters = https://${{ vars.CACHIX_CACHE_NAME }}.cachix.org
+            extra-trusted-public-keys = ${{ vars.CACHIX_PUBLIC_KEY }}
+
+      - name: Configure Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: ${{ vars.CACHIX_CACHE_NAME }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          skipAddingSubstituter: true
+          useDaemon: true
+
+      - name: Determine build metadata
+        id: metadata
+        run: |
+          set -euo pipefail
+          base_version="$(nix eval --raw .#packages.x86_64-linux.default.version)"
+          build_stamp="$(date -u +%y%m%d%H%M)"
+          release_version="${base_version}+build${build_stamp}"
+          built_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          {
+            echo "base_version=$base_version"
+            echo "build_stamp=$build_stamp"
+            echo "release_version=$release_version"
+            echo "built_at=$built_at"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build and push to Cachix
+        run: |
+          set -euo pipefail
+          nix build .#default --no-link --print-build-logs --print-out-paths > "$RUNNER_TEMP/out-paths"
+          cachix push "$CACHIX_CACHE_NAME" < "$RUNNER_TEMP/out-paths"
+
+      - name: Create build record release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ steps.metadata.outputs.release_version }}
+          BASE_VERSION: ${{ steps.metadata.outputs.base_version }}
+          BUILD_STAMP: ${{ steps.metadata.outputs.build_stamp }}
+          BUILT_AT: ${{ steps.metadata.outputs.built_at }}
+        run: |
+          set -euo pipefail
+          {
+            echo "Automated build record only. No release assets are attached."
+            echo
+            echo "- Recorded version: \`$RELEASE_VERSION\`"
+            echo "- Base version: \`$BASE_VERSION\`"
+            echo "- Build identifier: \`build$BUILD_STAMP\`"
+            echo "- Build time (UTC): \`$BUILT_AT\`"
+            echo "- System: \`x86_64-linux\`"
+            echo "- Source: https://github.com/$GITHUB_REPOSITORY/tree/$GITHUB_SHA"
+            echo "- Locked inputs: https://github.com/$GITHUB_REPOSITORY/blob/$GITHUB_SHA/flake.lock"
+            echo "- Workflow run: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "- Cache: https://$CACHIX_CACHE_NAME.cachix.org"
+            echo "- CACHIX_CACHE_NAME: \`$CACHIX_CACHE_NAME\`"
+            echo "- CACHIX_PUBLIC_KEY: \`$CACHIX_PUBLIC_KEY\`"
+            echo "- CACHIX_AUTH_TOKEN: repository secret configured; value not disclosed"
+          } > "$RUNNER_TEMP/release-notes.md"
+
+          gh release create "$RELEASE_VERSION" \
+            --target "$GITHUB_SHA" \
+            --title "$RELEASE_VERSION" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" \
+            --prerelease
