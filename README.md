@@ -20,7 +20,7 @@ Nix store 只读，运行中的程序不能可靠替换自身或随包运行组�
 
 ### NixOS 权限包装
 
-上游会检查 setuid 所有权，并尝试通过 `pkexec` 对程序文件执行 `chown` 和 `chmod`；这些操作不适用于只读 Nix store。NixOS 模块改为在 `/run/wrappers` 创建 capability 包装器。补丁在需要额外权限时选择该包装器，并把它的存在视为权限已经配置；未启用模块时则给出明确错误，而不尝试修改 store。
+上游会检查 setuid 所有权，并尝试通过 `pkexec` 对程序文件执行 `chown` 和 `chmod`；这些操作不适用于只读 Nix store。NixOS 模块改为在 `/run/wrappers` 创建 capability 包装器。Linux 上只要包装器存在，运行组件便始终通过它启动，因为界面可能在进程启动后才动态切换需要额外权限的配置；仅在启动时按当前配置选择路径会留下一个无 capability 的常驻进程。包装器不存在时，补丁给出明确错误，而不尝试修改 store。
 
 ### 共享 Electron 兼容
 

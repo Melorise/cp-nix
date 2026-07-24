@@ -10,7 +10,7 @@ diff --git a/src/main/core/manager.ts b/src/main/core/manager.ts
    return {
 -    corePath: mihomoCorePath(core),
 +    corePath:
-+      process.platform === 'linux' && tun?.enable && existsSync(nixMihomoWrapper)
++      process.platform === 'linux' && existsSync(nixMihomoWrapper)
 +        ? nixMihomoWrapper
 +        : mihomoCorePath(core),
      workDir: diffWorkDir ? mihomoProfileWorkDir(current) : mihomoWorkDir(),
