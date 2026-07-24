@@ -2,6 +2,11 @@
 
 本目录把锁定版本的上游桌面项目从源码构建为 Linux Nix Flake，不复用上游预制安装包。界面代码、原生 Node 模块和最终 ASAR 均在 Nix 构建中生成；共享 Electron、稳定运行组件及部分随包资源来自 nixpkgs 或 Flake inputs。版本和来源由 `flake.lock`、pnpm 锁文件及 Cargo 锁文件记录。
 
+## 注意事项
+仅保证基本功能使用。某rev的bug实在太多了，nix flake又经常需要稳定的网络连接，不得已才把这个捞了回来。   
+因传言原作者已出售该项目，改为源码构建，但受限于nix平台限制，仍有较多gui功能可能存在缺失。基础功能实测已无异常。  
+网卡模式需要使用gVisor堆栈。
+
 ## 补丁说明
 
 补丁按 `nix/unwrapped.nix` 中的顺序应用。
