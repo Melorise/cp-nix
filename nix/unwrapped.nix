@@ -36,7 +36,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "clash-party-unwrapped";
-  version = "2.0.0";
+  version = "2.0.1";
   inherit src;
 
   patches = [
@@ -58,7 +58,7 @@ stdenv.mkDerivation (finalAttrs: {
       pnpm config set fetch-timeout 120000
       pnpm config set network-concurrency 4
     '';
-    hash = "sha256-plsb9TjmprG5k2kYkqItEunTeyJWopRBH0SzzU/qM/8=";
+    hash = "sha256-g6bI798j0ld9jx9ekBcj+mSY6uWyjCWxIytxxgVcDsY=";
   };
 
   nativeBuildInputs = [

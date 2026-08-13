@@ -1,84 +1,5 @@
-diff --git a/src/native/sysproxy/index.js b/src/native/sysproxy/index.js
---- a/src/native/sysproxy/index.js
-+++ b/src/native/sysproxy/index.js
-@@ -70,6 +70,12 @@ function getResourcesPath() {
-   try {
-     const { app } = require('electron')
-     const appPath = app.getAppPath()
-+    // A shared system Electron keeps process.resourcesPath in Electron's own
-+    // store path. The directory containing app.asar is the app resource path.
-+    if (appPath.endsWith('.asar') && existsSync(join(dirname(appPath), 'sidecar'))) {
-+      return dirname(appPath)
-+    }
-+
-     if (existsSync(join(appPath, 'extra', 'sidecar'))) {
-       return appPath
-     }
-diff --git a/src/main/utils/dirs.ts b/src/main/utils/dirs.ts
---- a/src/main/utils/dirs.ts
-+++ b/src/main/utils/dirs.ts
-@@ -62,13 +62,16 @@ export function workDir(): string {
- }
- 
-+export function isDevelopment(): boolean {
-+  return is.dev && !app.getAppPath().endsWith('asar')
-+}
-+
- export function resourcesDir(): string {
--  if (is.dev) {
-+  const appPath = app.getAppPath()
-+  if (appPath.endsWith('asar')) {
-+    return path.dirname(appPath)
-+  } else if (isDevelopment()) {
-     return path.join(__dirname, '../../extra')
-   } else {
--    if (app.getAppPath().endsWith('asar')) {
--      return process.resourcesPath
--    } else {
--      return path.join(app.getAppPath(), 'resources')
--    }
-+    return path.join(appPath, 'resources')
-   }
- }
-diff --git a/src/main/window.ts b/src/main/window.ts
---- a/src/main/window.ts
-+++ b/src/main/window.ts
-@@ -1,11 +1,10 @@
- import { join } from 'path'
- import { readFileSync, writeFileSync } from 'fs'
- import { BrowserWindow, Menu, screen, shell } from 'electron'
--import { is } from '@electron-toolkit/utils'
- import icon from '../../resources/icon.png?asset'
- import { getAppConfig } from './config'
- import { quitWithoutCore, stopCore } from './core/manager'
- import { triggerSysProxy } from './sys/sysproxy'
- import { hideDockIcon, showDockIcon } from './resolve/tray'
--import { dataDir } from './utils/dirs'
-+import { dataDir, isDevelopment } from './utils/dirs'
- import { mainWindowLogger } from './utils/logger'
-@@ -172,10 +171,10 @@ export async function createMainWindow(silentStart = false): Promise<void> {
-   })
- 
--  if (is.dev) {
-+  if (isDevelopment()) {
-     mainWindow.webContents.openDevTools()
-   }
- 
--  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-+  if (isDevelopment() && process.env['ELECTRON_RENDERER_URL']) {
-     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
-   } else {
-     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
-@@ -199,7 +198,7 @@ function setupWindowEvents(window: BrowserWindow, config: WindowConfig): void {
-     }
- 
-     // 开发模式下始终显示窗口
--    if (!silentStart || is.dev) {
-+    if (!silentStart || isDevelopment()) {
-       clearQuitTimeout()
-       window.show()
-       window.focusOnWebView()
 diff --git a/src/main/resolve/floatingWindow.ts b/src/main/resolve/floatingWindow.ts
+index 49d1852..83fdb75 100644
 --- a/src/main/resolve/floatingWindow.ts
 +++ b/src/main/resolve/floatingWindow.ts
 @@ -1,8 +1,8 @@
@@ -105,3 +26,91 @@ diff --git a/src/main/resolve/floatingWindow.ts b/src/main/resolve/floatingWindo
    } catch (error) {
      logError('Failed to create floating window', error)
      floatingWindow = null
+diff --git a/src/main/utils/dirs.ts b/src/main/utils/dirs.ts
+index 0771ca0..d6e2c84 100644
+--- a/src/main/utils/dirs.ts
++++ b/src/main/utils/dirs.ts
+@@ -61,15 +61,18 @@ export function exePath(): string {
+   return app.getPath('exe')
+ }
+ 
++export function isDevelopment(): boolean {
++  return is.dev && !app.getAppPath().endsWith('asar')
++}
++
+ export function resourcesDir(): string {
+-  if (is.dev) {
++  const appPath = app.getAppPath()
++  if (appPath.endsWith('asar')) {
++    return path.dirname(appPath)
++  } else if (isDevelopment()) {
+     return path.join(__dirname, '../../extra')
+   } else {
+-    if (app.getAppPath().endsWith('asar')) {
+-      return process.resourcesPath
+-    } else {
+-      return path.join(app.getAppPath(), 'resources')
+-    }
++    return path.join(appPath, 'resources')
+   }
+ }
+ 
+diff --git a/src/main/window.ts b/src/main/window.ts
+index d40f89c..60529a3 100644
+--- a/src/main/window.ts
++++ b/src/main/window.ts
+@@ -1,12 +1,11 @@
+ import { join } from 'path'
+ import { readFileSync } from 'fs'
+ import { BrowserWindow, Menu, screen, shell } from 'electron'
+-import { is } from '@electron-toolkit/utils'
+ import icon from '../../resources/icon.png?asset'
+ import { getAppConfig } from './config'
+ import { quitWithoutCore } from './core/manager'
+ import { hideDockIcon, showDockIcon } from './resolve/tray'
+-import { dataDir } from './utils/dirs'
++import { dataDir, isDevelopment } from './utils/dirs'
+ import { mainWindowLogger } from './utils/logger'
+ import { atomicWriteFileSync } from './utils/safeFile'
+ 
+@@ -199,12 +198,12 @@ async function createWindowInternal(): Promise<void> {
+     autoQuitWithoutCoreMode
+   })
+ 
+-  if (is.dev) {
++  if (isDevelopment()) {
+     mainWindow.webContents.openDevTools()
+   }
+ 
+   const windowToLoad = mainWindow
+-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
++  if (isDevelopment() && process.env['ELECTRON_RENDERER_URL']) {
+     await windowToLoad.loadURL(process.env['ELECTRON_RENDERER_URL'])
+   } else {
+     await windowToLoad.loadFile(join(__dirname, '../renderer/index.html'))
+@@ -228,7 +227,7 @@ function setupWindowEvents(window: BrowserWindow, config: WindowConfig): void {
+     }
+ 
+     // 开发模式下始终显示窗口
+-    if (!silentStart || is.dev) {
++    if (!silentStart || isDevelopment()) {
+       clearQuitTimeout()
+       window.show()
+       window.focusOnWebView()
+diff --git a/src/native/sysproxy/index.js b/src/native/sysproxy/index.js
+index 147988f..f1b1ff3 100644
+--- a/src/native/sysproxy/index.js
++++ b/src/native/sysproxy/index.js
+@@ -71,6 +71,12 @@ function getResourcesPath() {
+   try {
+     const { app } = require('electron')
+     const appPath = app.getAppPath()
++    // A shared system Electron keeps process.resourcesPath in Electron's own
++    // store path. The directory containing app.asar is the app resource path.
++    if (appPath.endsWith('.asar') && existsSync(join(dirname(appPath), 'sidecar'))) {
++      return dirname(appPath)
++    }
++
+     if (existsSync(join(appPath, 'extra', 'sidecar'))) {
+       return appPath
+     }

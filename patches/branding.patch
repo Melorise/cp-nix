@@ -1,11 +1,24 @@
 diff --git a/electron-builder.yml b/electron-builder.yml
+index 69a05cd..2c987b5 100644
 --- a/electron-builder.yml
 +++ b/electron-builder.yml
-@@ -59 +59 @@
+@@ -67,7 +67,7 @@ pkg:
+     alignment: bottomleft
+     file: build/background.png
+ linux:
 -  executableName: mihomo-party
 +  executableName: clash-party
-@@ -68,2 +68,2 @@
+   icon: build/icon.png
+   desktop:
+     entry:
+@@ -76,8 +76,8 @@ linux:
+       Comment: A GUI client based on Mihomo
+       MimeType: 'x-scheme-handler/clash;x-scheme-handler/mihomo'
+       Keywords: proxy;clash;mihomo;vpn;
 -      StartupWMClass: mihomo-party
 -      Icon: mihomo-party
 +      StartupWMClass: clash-party
 +      Icon: clash-party
+   target:
+     - deb
+     - rpm

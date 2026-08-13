@@ -15,6 +15,9 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-24.04
+    env:
+      CACHIX_CACHE_NAME: ${{ vars.CACHIX_CACHE_NAME }}
+      CACHIX_PUBLIC_KEY: ${{ vars.CACHIX_PUBLIC_KEY }}
 
     steps:
       - name: Check out source
@@ -24,16 +27,52 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ github.token }}
+          extra_nix_config: |
+            extra-substituters = https://${{ vars.CACHIX_CACHE_NAME }}.cachix.org
+            extra-trusted-public-keys = ${{ vars.CACHIX_PUBLIC_KEY }}
 
       - name: Update lock file
         run: nix flake update
 
-      - name: Commit and push changes
+      - name: Check for lock file changes
+        id: changes
+        run: |
+          if git diff --quiet -- flake.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate Cachix configuration
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: |
           set -euo pipefail
-          if git diff --quiet -- flake.lock; then
-            exit 0
-          fi
+          test -n "$CACHIX_CACHE_NAME" || { echo "CACHIX_CACHE_NAME is not configured" >&2; exit 1; }
+          test -n "$CACHIX_PUBLIC_KEY" || { echo "CACHIX_PUBLIC_KEY is not configured" >&2; exit 1; }
+          test -n "$CACHIX_AUTH_TOKEN" || { echo "CACHIX_AUTH_TOKEN is not configured" >&2; exit 1; }
+
+      - name: Configure Cachix
+        if: steps.changes.outputs.changed == 'true'
+        uses: cachix/cachix-action@v17
+        with:
+          name: ${{ vars.CACHIX_CACHE_NAME }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          skipAddingSubstituter: true
+          useDaemon: true
+
+      - name: Build and push to Cachix
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          nix build .#default --no-link --print-build-logs --print-out-paths > "$RUNNER_TEMP/out-paths"
+          cachix push "$CACHIX_CACHE_NAME" < "$RUNNER_TEMP/out-paths"
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add flake.lock

@@ -1,7 +1,10 @@
 diff --git a/src/main/utils/dirs.ts b/src/main/utils/dirs.ts
+index 0771ca0..4ea1cb6 100644
 --- a/src/main/utils/dirs.ts
 +++ b/src/main/utils/dirs.ts
-@@ -79,6 +79,10 @@
+@@ -86,6 +86,10 @@ export function mihomoCoreDir(): string {
+ }
+ 
  export function mihomoCorePath(core: string): string {
 +  if (process.platform === 'linux') {
 +    core = 'mihomo'
