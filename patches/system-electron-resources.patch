@@ -27,17 +27,29 @@ index 49d1852..83fdb75 100644
      logError('Failed to create floating window', error)
      floatingWindow = null
 diff --git a/src/main/utils/dirs.ts b/src/main/utils/dirs.ts
-index 0771ca0..d6e2c84 100644
+index 0771ca0..2c4170f 100644
 --- a/src/main/utils/dirs.ts
 +++ b/src/main/utils/dirs.ts
-@@ -61,15 +61,18 @@ export function exePath(): string {
-   return app.getPath('exe')
+@@ -13,11 +13,15 @@ function portableDataDir(): string {
+   return path.join(exeDir(), 'data')
  }
  
 +export function isDevelopment(): boolean {
 +  return is.dev && !app.getAppPath().endsWith('asar')
 +}
 +
+ // 本地 Electron.app 使用独立的应用名和数据目录，避免开发时访问正式版的
+ // `mihomo-party Safe Storage` Keychain item 或修改正式配置。已打包的 dev 预发行版
+ // 仍与正式版共享身份和数据，保持原有滚动升级路径。
+ export function configureAppPaths(): void {
+-  if (!app.isPackaged) {
++  if (isDevelopment()) {
+     app.setName('mihomo-party-dev')
+     app.setPath('userData', path.join(app.getPath('appData'), 'mihomo-party-dev'))
+   }
+@@ -62,14 +66,13 @@ export function exePath(): string {
+ }
+ 
  export function resourcesDir(): string {
 -  if (is.dev) {
 +  const appPath = app.getAppPath()
@@ -55,6 +67,27 @@ index 0771ca0..d6e2c84 100644
    }
  }
  
+diff --git a/src/main/utils/icon.ts b/src/main/utils/icon.ts
+index d3b32e1..b05fd69 100644
+--- a/src/main/utils/icon.ts
++++ b/src/main/utils/icon.ts
+@@ -9,6 +9,7 @@ import { app } from 'electron'
+ import { getControledMihomoConfig } from '../config'
+ import { DEFAULT_MIHOMO_PORTS } from '../../shared/appConfig'
+ import { windowsDefaultIcon, darwinDefaultIcon, otherDevicesIcon } from './defaultIcon'
++import { isDevelopment } from './dirs'
+ 
+ export function isIOSApp(appPath: string): boolean {
+   const appDir = appPath.endsWith('.app')
+@@ -83,7 +84,7 @@ export function findBestAppPath(appPath: string): string | null {
+ }
+ 
+ async function getMacOSIconBuffer(appPath: string): Promise<Buffer> {
+-  if (!app.isPackaged) {
++  if (isDevelopment()) {
+     const { fileIconToBuffer } = await import('file-icon')
+     return Buffer.from(await fileIconToBuffer(appPath, { size: 512 }))
+   }
 diff --git a/src/main/window.ts b/src/main/window.ts
 index d40f89c..60529a3 100644
 --- a/src/main/window.ts
@@ -98,7 +131,7 @@ index d40f89c..60529a3 100644
        window.show()
        window.focusOnWebView()
 diff --git a/src/native/sysproxy/index.js b/src/native/sysproxy/index.js
-index 147988f..f1b1ff3 100644
+index 147988f..11d0e55 100644
 --- a/src/native/sysproxy/index.js
 +++ b/src/native/sysproxy/index.js
 @@ -71,6 +71,12 @@ function getResourcesPath() {
@@ -107,7 +140,7 @@ index 147988f..f1b1ff3 100644
      const appPath = app.getAppPath()
 +    // A shared system Electron keeps process.resourcesPath in Electron's own
 +    // store path. The directory containing app.asar is the app resource path.
-+    if (appPath.endsWith('.asar') && existsSync(join(dirname(appPath), 'sidecar'))) {
++    if (appPath.endsWith('asar') && existsSync(join(dirname(appPath), 'sidecar'))) {
 +      return dirname(appPath)
 +    }
 +
