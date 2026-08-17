@@ -3,7 +3,7 @@
     "asn": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-IBVDGsxeTfZw0/dHgKtFMgFuAmNtdKlbGVbjt5qXTF0=",
+        "narHash": "sha256-uoB5yG6ngHZjBzvsOtvz9KB58uX2cYVyl9sVuU6TMa8=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
       },
@@ -32,7 +32,7 @@
     "country": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-hVMZt2pUM2WdN32BIk53was+YH6qjycuO2h2t7h0T70=",
+        "narHash": "sha256-4UFc8EQBnd9o8OpJiaXLVOuAjFVJqUhGmDWIigOL0Ao=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
       },
@@ -44,7 +44,7 @@
     "geoip": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-wak9qrukz3WnwPoINjGU7MecRNyP7o2SYCAnTvkkRtY=",
+        "narHash": "sha256-2pb9Zy0kt1brv1Ayw6vQ7rsIoHhrubDpBA6wFmfx9/Y=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
       },
@@ -56,7 +56,7 @@
     "geosite": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Y7FxOzh5aUvUvqwnTFfr6IDANtymudQQBLr3OmuLLxI=",
+        "narHash": "sha256-7USh1FUB0OtAYaE6smiPPPiHx2hWj6dnReHs0K/qEkA=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
       },
@@ -68,7 +68,7 @@
     "metadb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Rtt0LlLXnhdXMzQWoDeY+3FjEE3nlqO+rvOcCPTGBtY=",
+        "narHash": "sha256-CaBvkOroP7VI0lgNU/CiFEBs0HdIjAsPw/k39Ke/yP0=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
       },
@@ -79,11 +79,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1786514691,
-        "narHash": "sha256-9dkt1i5JNbEfPb+EjLcSDNs8zqEHQ/1JlSaKgj0SBAg=",
+        "lastModified": 1786862985,
+        "narHash": "sha256-FBJRXmbGXiSUDvYEbfLYRkckayyZ6SK1UEqhCrIZ2Cs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "867dcbc30bafe3c862ef88620f2e7a109d7d3be5",
+        "rev": "e5bdc4a41d4c072fe1e3787eaa0320a384741d44",
         "type": "github"
       },
       "original": {
