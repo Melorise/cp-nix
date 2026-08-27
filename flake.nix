@@ -2,7 +2,7 @@
   description = "Clash Party, built from source with a reproducible Nix flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:Melorise/nixpkgs/nixos-unstable";
 
     clash-party = {
       url = "github:mihomo-party-org/clash-party/v2.0.1";
