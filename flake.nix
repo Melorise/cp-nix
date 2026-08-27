@@ -5,7 +5,7 @@
     nixpkgs.url = "github:Melorise/nixpkgs/nixos-unstable";
 
     clash-party = {
-      url = "github:mihomo-party-org/clash-party/v2.0.1";
+      url = "github:mihomo-party-org/clash-party/v2.0.2";
       flake = false;
     };
 

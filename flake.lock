@@ -15,16 +15,16 @@
     "clash-party": {
       "flake": false,
       "locked": {
-        "lastModified": 1786451647,
-        "narHash": "sha256-R75fyMlfn9btbQ8yxDHM40ZP5XbS/0wFqCTgDJlWIR8=",
+        "lastModified": 1786719328,
+        "narHash": "sha256-swLB82xiLdscGNyZfCNmVw27+SHVUS0/oZNf3pPlyO8=",
         "owner": "mihomo-party-org",
         "repo": "clash-party",
-        "rev": "356f9817f00e8cc1a501f1c9389b3b6cf2c66105",
+        "rev": "ec8bfc542aa1f196e1da9bce0c308089911108e9",
         "type": "github"
       },
       "original": {
         "owner": "mihomo-party-org",
-        "ref": "v2.0.1",
+        "ref": "v2.0.2",
         "repo": "clash-party",
         "type": "github"
       }
