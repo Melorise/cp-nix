@@ -56,7 +56,7 @@
     "geosite": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-nG0wx8phtA4zhcUc5P0vmamKWG57aoKbHlc3R9/lHR4=",
+        "narHash": "sha256-6lrQoSVDFxrW6dB04pdQfzDGhf6VyWfzpyaJAO55MNE=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
       },
@@ -68,7 +68,7 @@
     "metadb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-BzccePYUacidCs35HMszsInQg3emnH5UyVfQ3i7nGpI=",
+        "narHash": "sha256-yGzAGiB8inbqz9RjtMAw8hHmLHMFcD+8NudZJ1j05vA=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
       },
@@ -79,11 +79,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788107362,
-        "narHash": "sha256-pKxqcA71wmW6eMh3kFpW5NHIdbrgYOhtW2aOwqQ28GQ=",
+        "lastModified": 1788283238,
+        "narHash": "sha256-iFgPO6h9A+vvC8auAY2DBJv1t01vRRS6EWbUUqmEh0c=",
         "owner": "Melorise",
         "repo": "nixpkgs",
-        "rev": "e1c33116d631fcc7987a1a6b298622523ce1d66a",
+        "rev": "800023974a51c7b559d9ae8c489f3de3abdb14f0",
         "type": "github"
       },
       "original": {
