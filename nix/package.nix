@@ -96,6 +96,7 @@ stdenv.mkDerivation (finalAttrs: {
       --inherit-argv0 \
       --add-flags "$out/lib/clash-party/resources/app.asar" \
       --add-flags ${lib.escapeShellArg (lib.escapeShellArgs commandLineArgs)} \
+      --prefix PATH : ${lib.makeBinPath [ glib.bin ]} \
       --set-default ELECTRON_OZONE_PLATFORM_HINT auto
 
     runHook postInstall
