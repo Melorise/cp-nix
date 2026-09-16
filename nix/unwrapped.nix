@@ -2,7 +2,7 @@
   lib,
   stdenv,
   autoPatchelfHook,
-  electron_41,
+  electron_42,
   fetchPnpmDeps,
   nodejs_22,
   pnpm_10,
@@ -113,15 +113,15 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preBuild
 
     mkdir .electron-dist
-    cp -RL ${electron_41.dist}/. .electron-dist/
+    cp -RL ${electron_42.dist}/. .electron-dist/
     chmod -R u+w .electron-dist
 
     node_modules/.bin/electron-vite build
-    npm_config_nodedir=${electron_41.headers} \
+    npm_config_nodedir=${electron_42.headers} \
       node_modules/.bin/electron-builder --dir \
       --config=electron-builder.yml \
       --config.electronDist=$PWD/.electron-dist \
-      --config.electronVersion=${electron_41.version}
+      --config.electronVersion=${electron_42.version}
 
     runHook postBuild
   '';
