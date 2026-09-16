@@ -2,7 +2,7 @@
   lib,
   callPackage,
   stdenv,
-  electron_41,
+  electron_42,
   makeWrapper,
   copyDesktopItems,
   makeDesktopItem,
