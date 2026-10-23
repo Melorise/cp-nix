@@ -3,7 +3,7 @@
     "asn": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-fa+NKGLjv1Ot/bUpcI/moF58m5C71wzHKCEV03YvYqs=",
+        "narHash": "sha256-68K2gGbfLH3hWo3M0TtW1y+oMEoA54yx4ZjpRznJ6q4=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
       },
@@ -32,7 +32,7 @@
     "country": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ROVf3UbEoQqE1KXyqCHbItguKb1irTn8Um9sqrSydy0=",
+        "narHash": "sha256-3RhKP4yb0LueBnK5MIboHJO61Q5u/ydAnKun9IWswWw=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
       },
@@ -56,7 +56,7 @@
     "geosite": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-y18OQxsZ5h+OiJCkD33A0XPNEZ+nEgZBB7Kp96O/ARY=",
+        "narHash": "sha256-A+DMqOusJfxLYIMca+0XGGqus46PGJc6lYCZ4Zll5QE=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
       },
@@ -68,7 +68,7 @@
     "metadb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-wiF7pqaGobnRbpau4xzmbKA5D8cG5xIhdyomQhy4vsg=",
+        "narHash": "sha256-T8iHGgEvUkUTMyDihoWhwxUBvsitjKcBIB7KsgEh/UQ=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
       },
