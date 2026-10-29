@@ -44,7 +44,7 @@
     "geoip": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-4HyUawZoF+DoUmQlrJxX2xXTkjNDBGx8h0XHvaDmhNc=",
+        "narHash": "sha256-YBSoVKu3PksQ3yIlL/ogvkWcILVupHRFGA3NMLwzDRQ=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
       },
@@ -56,7 +56,7 @@
     "geosite": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-+8zP9bsywY3URUl9XeQMTVExCK9YzDImV3f7Se4Vi+c=",
+        "narHash": "sha256-9WbBip+RFBMdDY8jODus+kqoW8gL0x92qVaMnNN6nTE=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
       },
@@ -68,7 +68,7 @@
     "metadb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-NK0KSjA2O48+mP9VPAGcIxejEfsJTLn+xwBQ8Kyga5E=",
+        "narHash": "sha256-bTvjyQ8fx8FbODJhc6N7xtI6WR12aE2OownmP246aPU=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
       },
