@@ -2,7 +2,7 @@
   lib,
   callPackage,
   stdenv,
-  electron_42,
+  electron_44,
   makeWrapper,
   copyDesktopItems,
   makeDesktopItem,
@@ -92,7 +92,7 @@ stdenv.mkDerivation (finalAttrs: {
     cp -r ${unwrapped}/share $out/
     chmod -R u+w $out/share
 
-    makeWrapper ${lib.getExe electron_42} $out/bin/clash-party \
+    makeWrapper ${lib.getExe electron_44} $out/bin/clash-party \
       --inherit-argv0 \
       --add-flags "$out/lib/clash-party/resources/app.asar" \
       --add-flags ${lib.escapeShellArg (lib.escapeShellArgs commandLineArgs)} \
