@@ -2,7 +2,7 @@
   lib,
   stdenv,
   autoPatchelfHook,
-  electron_42,
+  electron_44,
   fetchPnpmDeps,
   nodejs_22,
   pnpm_10,
