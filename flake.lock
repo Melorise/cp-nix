@@ -3,7 +3,7 @@
     "asn": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-hGsRwYY6H9CmvfqgcF47o6g1SZthlC1mI2SPazH3/zE=",
+        "narHash": "sha256-uIemzXTqW1+SDq9l1HyUD7kXn9dsVW3nSDjfST+Vs6o=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
       },
@@ -32,7 +32,7 @@
     "country": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-e2p3Jwqc5u4gDo5ZLWClTxb6wFM4fkCbU903r0TMB7g=",
+        "narHash": "sha256-VOlsG7KjMHJV57cnHC94/XIIhuGt/AqpzvK1pilgs7w=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
       },
@@ -44,7 +44,7 @@
     "geoip": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-IjliXuAlqzvOUjHnpMw9ZQz4C9Pqdj097CHoMFOpCO4=",
+        "narHash": "sha256-yW6vzF3Xkog0lkx/mf0B9ulBlnBF84veil6tBY//f20=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
       },
@@ -56,7 +56,7 @@
     "geosite": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-aCbNVTJHdEjBXxwabd4rj0eitW8TgwhaIz2y6oXn4oA=",
+        "narHash": "sha256-UZbIVkzQVEuiSpzzzbhHlZ9D+6U1Mh2UD3nrAJvAOEI=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
       },
@@ -68,7 +68,7 @@
     "metadb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-tCX+5qy/PZm20xbpk0/SxwLQ/QWLMOoFxDxGxtFDcV0=",
+        "narHash": "sha256-yVA1Q8I/JtgNn9DhuTIdhAqCgSi1LlYpO+Wh6c91tY4=",
         "type": "file",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
       },
@@ -79,11 +79,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1793126548,
-        "narHash": "sha256-mNhjJW0jKDtQhTZGF0ihN9YX69L/UhxB+1OW3TZ3mps=",
+        "lastModified": 1793736589,
+        "narHash": "sha256-YWUuFS//ELGEQ9I7dEr062k1HfCJoltWfSMsbbyfwr4=",
         "owner": "Melorise",
         "repo": "nixpkgs",
-        "rev": "0dabd0514d865670bc9162096088ac814d182238",
+        "rev": "aabd77fee9c672bf99b13c44baef407e84a35f9a",
         "type": "github"
       },
       "original": {
