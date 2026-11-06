@@ -113,15 +113,15 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preBuild
 
     mkdir .electron-dist
-    cp -RL ${electron_42.dist}/. .electron-dist/
+    cp -RL ${electron_44.dist}/. .electron-dist/
     chmod -R u+w .electron-dist
 
     node_modules/.bin/electron-vite build
-    npm_config_nodedir=${electron_42.headers} \
+    npm_config_nodedir=${electron_44.headers} \
       node_modules/.bin/electron-builder --dir \
       --config=electron-builder.yml \
       --config.electronDist=$PWD/.electron-dist \
-      --config.electronVersion=${electron_42.version}
+      --config.electronVersion=${electron_44.version}
 
     runHook postBuild
   '';
